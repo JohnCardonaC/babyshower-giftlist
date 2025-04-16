@@ -40,3 +40,35 @@ button[disabled] {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 400px;
+}
+
+input {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  background-color: #8bc34a;
+}
+
+.loading {
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+  font-size: 1.1rem;
+  color: #888;
+  animation: fade 1s infinite alternate;
+}
+
+@keyframes fade {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}

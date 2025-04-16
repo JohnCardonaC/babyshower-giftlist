@@ -4,14 +4,25 @@ const giftList = document.getElementById("gift-list");
 // Cargar regalos desde Google Sheets
 async function fetchGifts() {
   try {
+    giftList.innerHTML = '<li class="loading">Cargando regalos...</li>';
+
     const res = await fetch(API_URL);
+    const contentType = res.headers.get("Content-Type");
+
+    if (!contentType || !contentType.includes("application/json")) {
+      giftList.innerHTML = "<li>Error: la respuesta no es JSON válido.</li>";
+      console.error("Respuesta inesperada:", await res.text());
+      return;
+    }
+
     const gifts = await res.json();
     renderGifts(gifts);
   } catch (err) {
     giftList.innerHTML = "<li>Error al cargar la lista de regalos.</li>";
-    console.error(err);
+    console.error("Error en fetchGifts:", err);
   }
 }
+
 
 // Mostrar lista de regalos en pantalla
 function renderGifts(gifts) {
