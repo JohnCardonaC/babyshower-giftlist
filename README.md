@@ -92,10 +92,12 @@ id | nombre | tomado | tomado_por
 
 ---
 
-### Paso 2: Apps Script
+### Paso 2: Crear el Apps Script desde la hoja de cálculo
 
-1. `Extensiones → Apps Script`
-2. Pega este código:
+1. En esa misma hoja de cálculo, haz clic en el menú superior:  
+   `Extensiones → Apps Script`
+
+2. Se abrirá una nueva pestaña con el editor de scripts. Borra todo el contenido inicial y **pega el siguiente código:**
 
 ```javascript
 const SHEET_NAME = 'Hoja 1';
@@ -144,15 +146,20 @@ function doPost(e) {
 }
 ```
 
+3. Guarda el proyecto con el nombre que quieras (por ejemplo: `API Baby Shower`)
+
 ---
 
 ### Paso 3: Publicar como Web App
 
-1. `Implementar → Nueva implementación`
-2. Tipo: Aplicación web
-3. Ejecutar como: **Tú mismo**
-4. Acceso: **Cualquiera**
-5. Copia la URL y colócala en `env.js`
+1. En la parte superior derecha, haz clic en `Implementar → Nueva implementación`
+2. En "Tipo de implementación" selecciona **Aplicación web**
+3. Configura así:
+   - Descripción: `API regalos`
+   - Ejecutar como: **Tú mismo**
+   - Quién tiene acceso: **Cualquiera**
+4. Haz clic en **Implementar**
+5. Copia la URL generada y pégala en tu archivo `env.js`
 
 ---
 
