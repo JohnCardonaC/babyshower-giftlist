@@ -2,19 +2,71 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Regalos - Baby Shower</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baby Shower Gift List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
 </head>
 
-<body>
-  <h1>🎁 Lista de Regalos para el Baby Shower</h1>
-  <ul id="gift-list"></ul>
+<body class="min-h-screen font-sans relative z-0">
+  <div id="babyshower-banner" class="relative flex flex-col items-center text-center py-12 px-4">
+    <svg class="absolute w-80 h-40 opacity-40 top-0 left-1/2 -translate-x-1/2" fill="white" viewBox="0 0 640 320"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M96 128a64 64 0 0 1 128 0h128a96 96 0 1 1 192 0h32a64 64 0 1 1 0 128H96a64 64 0 0 1 0-128z" />
+    </svg>
+    <h2 class="text-4xl font-bold font-[Great_Vibes] text-pink-600 z-10">En honor a</h2>
+    <div id="baby-name" class="text-5xl font-[Playfair_Display] text-gray-800 z-10"></div>
+    <div id="baby-details" class="mt-4 z-10 text-gray-700 text-lg italic flex flex-col items-center space-y-1"></div>
+  </div>
 
-  <!-- Scripts al final del body -->
+  <main class="max-w-xl mx-auto px-4 pb-16">
+    <ul id="gift-list" class="space-y-4"></ul>
+
+    <form id="custom-gift-form" class="mt-10 space-y-4">
+      <h3 class="text-xl font-semibold text-gray-700">¿Quieres regalar algo diferente?</h3>
+      <input type="text" id="customGiftName" placeholder="Nombre del regalo" required
+        class="w-full border rounded-lg px-4 py-2" />
+      <input type="text" id="customGiverName" placeholder="Tu nombre" required
+        class="w-full border rounded-lg px-4 py-2" />
+      <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg">Agregar
+        regalo</button>
+    </form>
+  </main>
+
+  <script src="config.js"></script>
   <script src="env.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof THEME !== 'undefined') {
+        document.body.classList.add(`theme-${THEME.type}`);
+      }
+
+      if (typeof BABYSHOWER_INFO !== 'undefined') {
+        const nameElement = document.getElementById("baby-name");
+        if (nameElement) nameElement.textContent = BABYSHOWER_INFO.nombre || "";
+
+        const details = document.getElementById("baby-details");
+        if (details) {
+          details.innerHTML = `
+              <div><strong>${BABYSHOWER_INFO.dia || ""}</strong></div>
+              <div>${BABYSHOWER_INFO.fecha || ""} — ${BABYSHOWER_INFO.hora || ""}</div>
+              <div>${BABYSHOWER_INFO.lugar || ""}</div>
+            `;
+        }
+      }
+    });
+  </script>
   <script src="script.js"></script>
+  <script>
+    document.body.classList.add(`theme-${THEME.type}`);
+  </script>
+
 </body>
 
 </html>

@@ -11,27 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Crear encabezado visual con estilo
+  // Insertar nombre del bebé en el encabezado
   if (typeof BABYSHOWER_INFO !== 'undefined') {
-    const banner = document.getElementById("babyshower-banner");
-    if (banner) {
-      banner.innerHTML = `
-        <div class="script-title">En honor a</div>
-        <div class="main-title">${BABYSHOWER_INFO.nombre}</div>
-        <div class="stars">⭐ ⭐ ⭐</div>
-        <div class="details">
-          <div><strong>${BABYSHOWER_INFO.dia}</strong></div>
-          <div>${BABYSHOWER_INFO.fecha}</div>
-          <div><strong>${BABYSHOWER_INFO.hora}</strong></div>
-        </div>
-      `;
+    const nameElement = document.getElementById("baby-name");
+    if (nameElement) {
+      nameElement.textContent = BABYSHOWER_INFO.nombre || "";
     }
   }
 
   // Cargar regalos desde Google Sheets
   async function fetchGifts() {
     try {
-      giftList.innerHTML = '<li class="loading">Cargando regalos...</li>';
+      giftList.innerHTML = '<li class="text-center text-gray-500 animate-pulse">Cargando regalos...</li>';
       const res = await fetch(API_URL);
       const contentType = res.headers.get("Content-Type");
 
@@ -49,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Mostrar lista de regalos
   function renderGifts(gifts) {
     giftList.innerHTML = "";
 
@@ -57,11 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       const tomado = gift.tomado === true || gift.tomado === "TRUE";
 
+      li.className = "bg-white shadow rounded-lg px-4 py-3 flex items-center justify-between";
       li.innerHTML = `
         <span>${gift.nombre}</span>
-        <button 
+        <button
           ${tomado ? "disabled" : ""}
-          onclick="takeGift(${gift.id}, '${gift.nombre}')">
+          onclick="takeGift(${gift.id}, '${gift.nombre}')"
+          class="${tomado ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-pink-500 hover:bg-pink-600 text-white'} px-3 py-1 rounded"
+        >
           ${tomado ? "Ya fue tomado" : "Lo llevo"}
         </button>
       `;
@@ -70,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Marcar regalo como tomado
   window.takeGift = async function (id, nombre) {
     const tomado_por = prompt(`¿Cuál es tu nombre para confirmar que llevarás "${nombre}"?`);
     if (!tomado_por) return;
@@ -94,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Agregar regalo personalizado
   document.getElementById("custom-gift-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -135,6 +126,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Iniciar
   fetchGifts();
 });

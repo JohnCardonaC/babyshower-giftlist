@@ -1,6 +1,6 @@
 // config.js
 const THEME = {
-  type: "niña", // o "niño"
+  type: "niño", // o "niño"
 };
 
 const BABYSHOWER_INFO = {
