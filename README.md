@@ -68,14 +68,27 @@ Este archivo debe estar en el `.gitignore` para evitar exponer la URL.
 
 ## 🔌 Conectar con Google Sheets como backend
 
-### Paso 1: Crear hoja
+### Paso 1: Crear hoja de cálculo
 
 1. Ve a [https://sheets.new](https://sheets.new)
-2. Agrega los encabezados en la primera fila:
+2. En la primera fila, escribe los siguientes encabezados:
 
 ```
 id | nombre | tomado | tomado_por
 ```
+
+3. A partir de la segunda fila, agrega tu lista de regalos personalizados.  
+   Asegúrate de que la columna "tomado" esté en `FALSE` para que los regalos estén disponibles.  
+   Ejemplo:
+
+```
+1 | Pañales RN              | FALSE | 
+2 | Ropita recién nacido    | FALSE | 
+3 | Toallitas húmedas       | FALSE |
+4 | Cobija suave            | FALSE |
+```
+
+🔔 **Este es solo un ejemplo.** Puedes modificar los nombres y la cantidad de regalos según tu preferencia.
 
 ---
 
