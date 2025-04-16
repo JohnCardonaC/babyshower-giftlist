@@ -1,0 +1,42 @@
+/* style.css */
+body {
+  font-family: sans-serif;
+  padding: 2rem;
+  background-color: #fdf6f0;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #ff69b4;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #fff;
+  border: 1px solid #ddd;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  background-color: #ff69b4;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

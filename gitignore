@@ -1,0 +1,7 @@
+
+# No subir la configuración privada
+env.js
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

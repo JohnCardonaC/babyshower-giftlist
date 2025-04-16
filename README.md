@@ -29,6 +29,8 @@ babyshower-giftlist/
 ├── index.html
 ├── style.css
 ├── script.js
+├── env.js          # Contiene tu URL privada de la API (NO SE SUBE A GITHUB)
+├── .gitignore
 └── README.md
 ```
 
@@ -123,11 +125,34 @@ function doPost(e) {
 
 ---
 
-### Paso 4: Actualiza tu archivo `script.js`
+### Paso 4: Configura tu `env.js`
 
-Una vez tengas la URL del API, reemplaza tu archivo `script.js` por el nuevo que consultará y actualizará en tiempo real.
+1. Crea un archivo llamado `env.js` en la raíz del proyecto:
+```js
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/TU_API_REAL/exec"
+};
+```
 
-(Pendiente: el próximo paso del README tendrá el nuevo `script.js` que usará la API).
+2. Este archivo **no debe subirse a GitHub**. Ya está ignorado por `.gitignore`.
+
+---
+
+### Paso 5: Asegúrate que `index.html` cargue los scripts en orden
+
+```html
+<script src="env.js"></script>
+<script src="script.js"></script>
+```
+
+---
+
+## 🛡️ Seguridad
+
+Para mantener tu URL de Google Sheets API segura:
+
+- Usa `env.js` para ocultarla del código público.
+- Añade `env.js` a tu `.gitignore` (ya incluido en este repositorio).
 
 ---
 
