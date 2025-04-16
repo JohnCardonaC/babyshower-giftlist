@@ -10,15 +10,11 @@ Todos pueden ver en tiempo real qué regalos ya han sido tomados, gracias a una 
 
 - Lista de regalos visible para todos.
 - Botón “Lo llevo”.
-- Estado en tiempo real sincronizado con Google Sheets.
-- Fácil de personalizar y desplegar.
-- Ideal para compartir por WhatsApp, correo o redes.
-
----
-
-## 🌐 Demo
-
-[https://babyshower.dycdigital.com.co](https://babyshower.dycdigital.com.co)
+- Agregar regalos personalizados ("Otro regalo").
+- Estado sincronizado en tiempo real con Google Sheets.
+- No requiere backend propio.
+- Carga y actualización dinámica sin recargar la página.
+- Protección de la URL del API mediante archivo `env.js` no público.
 
 ---
 
@@ -44,36 +40,25 @@ babyshower-giftlist/
 git clone https://github.com/TU_USUARIO/babyshower-giftlist.git
 ```
 
-Reemplaza `TU_USUARIO` con tu nombre real en GitHub.
-
 ---
 
-## 🔌 Conectar con Google Sheets como Backend
+## 🔌 Conectar con Google Sheets como backend
 
-### Paso 1: Crear la hoja de cálculo
+### Paso 1: Crear hoja en Google Sheets
 
 1. Ve a [https://sheets.new](https://sheets.new)
-2. Nombra la hoja como `Regalos Baby Shower`
-3. En la primera fila (encabezado), pon estas columnas:
+2. Agrega los encabezados en la primera fila:
 
 ```
 id | nombre | tomado | tomado_por
 ```
 
-4. Agrega algunos regalos como ejemplo:
-
-```
-1  | Pañales RN                 | FALSE |
-2  | Ropita recién nacido       | FALSE |
-3  | Toallitas húmedas          | FALSE |
-```
-
 ---
 
-### Paso 2: Crear el API en Google Apps Script
+### Paso 2: Crear el script en Apps Script
 
-1. Desde la hoja de cálculo, ve a `Extensiones → Apps Script`
-2. Borra el contenido y pega este código:
+1. Ve a `Extensiones → Apps Script`
+2. Borra todo y pega el siguiente código:
 
 ```javascript
 const SHEET_NAME = 'Hoja 1';
@@ -89,77 +74,76 @@ function doGet() {
     return regalo;
   });
 
-  return ContentService.createTextOutput(JSON.stringify(regalos)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(regalos))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-  const params = JSON.parse(e.postData.contents);
+  const params = e.parameter;
+
+  const id = params.id;
+  const nombre = params.nombre || null;
+  const tomado_por = params.tomado_por;
   const data = sheet.getDataRange().getValues();
 
   for (let i = 1; i < data.length; i++) {
-    if (data[i][0] == params.id) {
-      sheet.getRange(i + 1, 3).setValue(true); // tomado
-      sheet.getRange(i + 1, 4).setValue(params.tomado_por); // tomado_por
-      break;
+    if (data[i][0].toString() === id.toString()) {
+      sheet.getRange(i + 1, 3).setValue(true);
+      sheet.getRange(i + 1, 4).setValue(tomado_por);
+      return ContentService.createTextOutput(JSON.stringify({ status: 'updated' }))
+        .setMimeType(ContentService.MimeType.JSON);
     }
   }
 
-  return ContentService.createTextOutput(JSON.stringify({ status: 'success' })).setMimeType(ContentService.MimeType.JSON);
+  if (nombre) {
+    sheet.appendRow([id, nombre, true, tomado_por]);
+    return ContentService.createTextOutput(JSON.stringify({ status: 'added' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({ status: 'error' }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 ```
 
-3. Guarda el script con el nombre `API Baby Shower`.
-
 ---
 
-### Paso 3: Publicar la API
+### Paso 3: Publicar como Web App
 
-1. Haz clic en `Implementar → Implementaciones → Nueva implementación`.
+1. `Implementar → Nueva implementación`
 2. Tipo: **Aplicación web**
-3. Descripción: `API regalos`
-4. Ejecutar como: **Tú mismo**
-5. Quién tiene acceso: **Cualquiera (incluso anónimo)**
-6. Haz clic en **Implementar**
-7. Copia la URL de despliegue (será algo como `https://script.google.com/macros/s/AKfyc.../exec`)
+3. Ejecutar como: **Tú mismo**
+4. Acceso: **Cualquiera, incluso anónimo**
+5. Copia la URL generada
 
 ---
 
-### Paso 4: Configura tu `env.js`
+### Paso 4: Crear `env.js`
 
-1. Crea un archivo llamado `env.js` en la raíz del proyecto:
 ```js
+// env.js
 const CONFIG = {
-  API_URL: "https://script.google.com/macros/s/TU_API_REAL/exec"
+  API_URL: "https://script.google.com/macros/s/XXXXXX/exec"
 };
 ```
 
-2. Este archivo **no debe subirse a GitHub**. Ya está ignorado por `.gitignore`.
+> ⚠️ Agrega `env.js` al `.gitignore` para que no se suba a GitHub
 
 ---
 
-### Paso 5: Asegúrate que `index.html` cargue los scripts en orden
+## 🛡️ Evitar problemas de CORS
 
-```html
-<script src="env.js"></script>
-<script src="script.js"></script>
-```
-
----
-
-## 🛡️ Seguridad
-
-Para mantener tu URL de Google Sheets API segura:
-
-- Usa `env.js` para ocultarla del código público.
-- Añade `env.js` a tu `.gitignore` (ya incluido en este repositorio).
+- Google Apps Script **no permite `POST` con JSON desde otros dominios**.
+- Se usa `URLSearchParams` + `mode: "no-cors"` en `fetch()` para evitar errores.
+- Esto **envía los datos correctamente**, aunque no podamos leer la respuesta.
 
 ---
 
 ## 🙌 Créditos
 
-Hecho con cariño por y para futuros padres 💕  
-Con tecnologías 100% abiertas: HTML + CSS + JavaScript + Google Sheets.
+Hecho con cariño para futuros padres 💕  
+Código 100% libre, sin frameworks, y fácil de personalizar.
 
 ---
 
