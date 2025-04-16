@@ -1,20 +1,21 @@
 
 # 🎁 Baby Shower Gift List
 
-Una aplicación web simple hecha con HTML, CSS y JavaScript puro, pensada para que los invitados a un baby shower puedan ver una lista de regalos y marcar cuál llevarán.  
-Todos pueden ver en tiempo real qué regalos ya han sido tomados, gracias a una integración con Google Sheets como backend.
+Una aplicación web simple hecha con HTML, CSS y JavaScript puro, pensada para que los invitados a un baby shower puedan ver una lista de regalos, marcar cuál llevarán y agregar otros.  
+Incluye personalización de tema (niño o niña), encabezado especial con datos del evento y conexión con Google Sheets como backend.
 
 ---
 
 ## ✨ Funcionalidades
 
-- Lista de regalos visible para todos.
-- Botón “Lo llevo”.
-- Agregar regalos personalizados ("Otro regalo").
-- Estado sincronizado en tiempo real con Google Sheets.
-- No requiere backend propio.
-- Carga y actualización dinámica sin recargar la página.
-- Protección de la URL del API mediante archivo `env.js` no público.
+- Lista de regalos visible y actualizable.
+- Botón “Lo llevo” que marca regalos como tomados.
+- Agregar regalos personalizados por los invitados.
+- Personalización del tema: niña o niño.
+- Encabezado dinámico con nombre del bebé, fecha, hora y lugar.
+- Conexión con Google Sheets como backend (sin frameworks).
+- Carga dinámica sin recargar la página.
+- CORS solucionado con `no-cors`.
 
 ---
 
@@ -25,26 +26,49 @@ babyshower-giftlist/
 ├── index.html
 ├── style.css
 ├── script.js
-├── env.js          # Contiene tu URL privada de la API (NO SE SUBE A GITHUB)
+├── env.js             # Contiene la URL privada de tu API de Google Sheets (NO se sube a GitHub)
+├── config.js          # Contiene personalización visual y del evento
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 🚀 Cómo usar este proyecto
+## 🛠️ Personalización del evento (`config.js`)
 
-### 1. Clonar el repositorio
+```js
+const THEME = {
+  type: "niña", // "niña" o "niño"
+};
 
-```bash
-git clone https://github.com/TU_USUARIO/babyshower-giftlist.git
+const BABYSHOWER_INFO = {
+  nombre: "Emilia",
+  dia: "Lunes",
+  fecha: "16 de Diciembre",
+  hora: "4 P.M.",
+  lugar: "Calle 123 #45-67, Ciudad"
+};
 ```
+
+Este archivo permite ajustar los colores, el título del encabezado y los datos del evento.
+
+---
+
+## 🔐 Configuración de API (`env.js`)
+
+```js
+const CONFIG = {
+  API_URL: "https://script.google.com/macros/s/TU_API_KEY/exec"
+};
+```
+
+Este archivo debe estar en el `.gitignore` para evitar exponer la URL.
 
 ---
 
 ## 🔌 Conectar con Google Sheets como backend
 
-### Paso 1: Crear hoja en Google Sheets
+### Paso 1: Crear hoja
 
 1. Ve a [https://sheets.new](https://sheets.new)
 2. Agrega los encabezados en la primera fila:
@@ -55,10 +79,10 @@ id | nombre | tomado | tomado_por
 
 ---
 
-### Paso 2: Crear el script en Apps Script
+### Paso 2: Apps Script
 
-1. Ve a `Extensiones → Apps Script`
-2. Borra todo y pega el siguiente código:
+1. `Extensiones → Apps Script`
+2. Pega este código:
 
 ```javascript
 const SHEET_NAME = 'Hoja 1';
@@ -112,38 +136,24 @@ function doPost(e) {
 ### Paso 3: Publicar como Web App
 
 1. `Implementar → Nueva implementación`
-2. Tipo: **Aplicación web**
+2. Tipo: Aplicación web
 3. Ejecutar como: **Tú mismo**
-4. Acceso: **Cualquiera, incluso anónimo**
-5. Copia la URL generada
+4. Acceso: **Cualquiera**
+5. Copia la URL y colócala en `env.js`
 
 ---
 
-### Paso 4: Crear `env.js`
+## 🛡️ Seguridad y buenas prácticas
 
-```js
-// env.js
-const CONFIG = {
-  API_URL: "https://script.google.com/macros/s/XXXXXX/exec"
-};
-```
-
-> ⚠️ Agrega `env.js` al `.gitignore` para que no se suba a GitHub
-
----
-
-## 🛡️ Evitar problemas de CORS
-
-- Google Apps Script **no permite `POST` con JSON desde otros dominios**.
-- Se usa `URLSearchParams` + `mode: "no-cors"` en `fetch()` para evitar errores.
-- Esto **envía los datos correctamente**, aunque no podamos leer la respuesta.
+- `env.js` está en `.gitignore`, así tu URL no se publica.
+- El proyecto es 100% HTML + CSS + JS puro, sin dependencias.
 
 ---
 
 ## 🙌 Créditos
 
 Hecho con cariño para futuros padres 💕  
-Código 100% libre, sin frameworks, y fácil de personalizar.
+Código abierto, fácil de usar, compartir y personalizar.
 
 ---
 

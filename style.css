@@ -72,3 +72,80 @@ button[type="submit"] {
   from { opacity: 0.3; }
   to { opacity: 1; }
 }
+
+/* Temas por tipo de baby shower */
+body.theme-nino {
+  background-color: #e0f7fa; /* celeste claro */
+  color: #01579b;.babyshower-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .babyshower-header h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: inherit;
+  }
+  
+  .babyshower-header p {
+    margin: 0.2rem 0;
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+  
+}
+
+body.theme-nina {
+  background-color: #fff0f5; /* rosado suave */
+  color: #c2185b;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600&display=swap');
+
+.babyshower-banner {
+  text-align: center;
+  margin: 2rem auto;
+  padding: 1.5rem 1rem;
+  max-width: 600px;
+  background-color: #f7fdf9;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+  font-family: 'Playfair Display', serif;
+}
+
+.babyshower-banner .script-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+  color: #6a8759;
+}
+
+.babyshower-banner .main-title {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #6a8759;
+  letter-spacing: 2px;
+  margin: 0.5rem 0;
+}
+
+.babyshower-banner .stars {
+  color: gold;
+  font-size: 1.3rem;
+  margin: 0 0.2rem;
+}
+
+.babyshower-banner .details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-style: italic;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  padding: 0.5rem 0;
+}
