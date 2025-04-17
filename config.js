@@ -4,7 +4,7 @@ const THEME = {
 };
 
 const BABYSHOWER_INFO = {
-  nombre: "Emilia",
+  nombre: "Johncito",
   dia: "Lunes", // ← Este campo es el que te falta si ves 'undefined'
   fecha: "16 de Diciembre",
   hora: "4 P.M.",
