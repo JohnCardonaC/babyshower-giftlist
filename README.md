@@ -4,6 +4,8 @@
 Una aplicación web simple hecha con HTML, CSS y JavaScript puro, pensada para que los invitados a un baby shower puedan ver una lista de regalos, marcar cuál llevarán y agregar otros.  
 Incluye personalización de tema (niño o niña), encabezado especial con datos del evento y conexión con Google Sheets como backend.
 
+Demo: https://babyshower.dycdigital.com.co/
+
 ---
 
 ## ✨ Funcionalidades
