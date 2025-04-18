@@ -1,4 +1,3 @@
-
 # 🎁 Baby Shower Gift List
 
 Una aplicación web simple hecha con HTML, CSS y JavaScript puro, pensada para que los invitados a un baby shower puedan ver una lista de regalos, marcar cuál llevarán y agregar otros.  
@@ -15,6 +14,7 @@ Demo: https://babyshower.dycdigital.com.co/
 - Agregar regalos personalizados por los invitados.
 - Personalización del tema: niña o niño.
 - Encabezado dinámico con nombre del bebé, fecha, hora y lugar.
+- Descripción personalizada del evento debajo del encabezado.
 - Conexión con Google Sheets como backend (sin frameworks).
 - Carga dinámica sin recargar la página.
 - CORS solucionado con `no-cors`.
@@ -48,11 +48,12 @@ const BABYSHOWER_INFO = {
   dia: "Lunes",
   fecha: "16 de Diciembre",
   hora: "4 P.M.",
-  lugar: "Calle 123 #45-67, Ciudad"
+  lugar: "Calle 123 #45-67, Ciudad",
+  descripcion: "Te invitamos a compartir con nosotros este momento tan especial ❤️"
 };
 ```
 
-Este archivo permite ajustar los colores, el título del encabezado y los datos del evento.
+Este archivo permite ajustar los colores, el título del encabezado, los datos del evento, y ahora también un **párrafo personalizado** que se mostrará debajo del encabezado con una descripción o mensaje emotivo.
 
 ---
 
